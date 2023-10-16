@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  haproxy:
+    image: haproxy:latest
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - server_1234
+      - server_9797
+
+  server_1234:
+    image: node:18-alpine
+    command: sh -c "node socket-server-1.js"
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "1234:1234"
+
+  server_9797:
+    image: node:18-alpine
+    command: sh -c "node app.js"
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "9797:9797"
