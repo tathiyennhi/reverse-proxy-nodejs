@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+    - host: "example.com"
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 8080
+          - path: /socket
+            pathType: Prefix
+            backend:
+              service:
+                name: socket-service
+                port:
+                  number: 8080
+  # Add TLS configuration if you have a TLS certificate
+  tls:
+    - hosts:
+        - "127.0.0.1"
+      secretName: tls-secret # The secret that contains the TLS certificate and key
