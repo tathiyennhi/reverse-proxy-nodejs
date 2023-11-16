@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socket-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: socket
+  template:
+    metadata:
+      labels:
+        app: socket
+    spec:
+      containers:
+      - name: socket-container
+        image: socket_service:1.0.0
+        ports:
+        - containerPort: 1234

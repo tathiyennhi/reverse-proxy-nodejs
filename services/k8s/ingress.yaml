@@ -2,8 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: example-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - http:
@@ -14,11 +12,11 @@ spec:
           service:
             name: api-service
             port:
-              number: 9797
+              number: 8080
       - path: /socket
         pathType: Prefix
         backend:
           service:
             name: socket-service
             port:
-              number: 1234
+              number: 8080
