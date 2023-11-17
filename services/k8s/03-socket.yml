@@ -1,0 +1,81 @@
+# Description: Socket service deployment and service for socket 1
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: socket
+  labels:
+    app: socket
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: socket
+  template:
+    metadata:
+      labels:
+        app: socket
+    spec:
+      containers:
+        - name: socket
+          image: socket_service:1.0.0
+          ports:
+            - name: web
+              containerPort: 1234
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: socket
+
+spec:
+  ports:
+    - name: web
+      port: 1234
+      targetPort: web
+
+  selector:
+    app: socket
+---
+# Description: Socket service deployment and service for socket 2
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: socket2
+  labels:
+    app: socket2
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: socket2
+  template:
+    metadata:
+      labels:
+        app: socket2
+    spec:
+      containers:
+        - name: socket2
+          image: socket_service2:1.0.0
+          ports:
+            - name: web
+              containerPort: 1235
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: socket2
+
+spec:
+  ports:
+    - name: web
+      port: 1235
+      targetPort: web
+
+  selector:
+    app: socket2
